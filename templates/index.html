@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PestoGuard - Pest Prediction</title>
+</head>
+<body>
+    <div class="container">
+        <h1>PestoGuard - Pest Prediction</h1>
+
+        <!-- API Key Generation -->
+        <div class="api-section">
+            <h2>Generate API Key</h2>
+            <input type="text" id="username" placeholder="Enter your name">
+            <button onclick="generateApiKey()">Generate Key</button>
+            <p id="apiKey"></p>
+        </div>
+
+        <!-- API Key Input for Prediction 
+        <div class="api-section">
+            <h2>Enter API Key</h2>
+            <input type="text" id="userApiKey" placeholder="Enter your API Key" name="key" oninput="verifyApiKey() ">
+            <span id="apiStatus"></span>
+        </div>
+
+        Image Prediction
+        <div class="prediction-section">
+            <h2>Upload Image for Prediction</h2>
+            <input type="file" id="imageUpload" accept="image/*">
+            <select id="infestation">
+                <option value="Rice Stem Borer (Scirpophaga incertulas)">Rice Stem Borer</option>
+                <option value="Brown Planthopper (Nilaparvata lugens)">Brown Planthopper</option>
+                <option value="Rice Blast (Magnaporthe oryzae)">Rice Blast</option>
+            </select>
+            <button onclick="predictPest()">Predict</button>
+            <p id="result"></p>
+        </div>
+    </div>-->
+
+    <script>
+        const API_URL = "http://127.0.0.1:5000";
+
+        function generateApiKey() {
+            let username = document.getElementById("username").value;
+            if (!username) {
+                alert("Please enter a username!");
+                return;
+            }
+
+            fetch(`${API_URL}/api_create`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name: username })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.api_key) {
+                    document.getElementById("apiKey").innerText = "Your API Key: " + data.api_key;
+                } else {
+                    alert("Error: " + data.error);
+                }
+            })
+            .catch(error => console.log("Error:", error));
+        }
+
+        let timeout = null;
+
+/*function verifyApiKey() {
+    clearTimeout(timeout); // Clear previous timeout to avoid multiple requests
+
+    let apiKey = document.getElementById("userApiKey").value;
+    let apiStatus = document.getElementById("apiStatus");
+
+    if (!apiKey) {
+        apiStatus.textContent = ""; // Clear message if input is empty
+        return;
+    }
+
+    timeout = setTimeout(() => {
+        fetch("https://your-backend-url.com/api_verify", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ key: apiKey })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                apiStatus.textContent = "❌ Invalid API Key";
+                apiStatus.style.color = "red";
+            } else {
+                apiStatus.textContent = "✅ API Key Verified";
+                apiStatus.style.color = "green";
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            apiStatus.textContent = "⚠️ Verification Failed";
+            apiStatus.style.color = "orange";
+        });
+    }, 500); // Delay API request to reduce unnecessary calls
+}
+
+
+        function predictPest() {
+    let apiKey = document.getElementById("userApiKey").value;
+    let imageFile = document.getElementById("imageUpload").files[0];
+    let infestationName = document.getElementById("infestation").value;
+
+    if (!apiKey) {
+        alert("Please enter your API Key!");
+        return;
+    }
+
+    if (!imageFile) {
+        alert("Please upload an image!");
+        return;
+    }
+
+    let formData = new FormData();
+    formData.append("image", imageFile);
+    formData.append("infestation_name", infestationName);
+
+    fetch(`${API_URL}/predict`, {
+        method: "POST",
+        headers: { "x-api-key": apiKey },  // Send API key in headers
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            alert("Error: " + data.error);
+        } else {
+            document.getElementById("result").innerHTML = `
+                <strong>Prediction:</strong> ${data.predicted_class} <br>
+                <strong>Confidence:</strong> ${data.confidence} <br>
+                <strong>Solution:</strong> ${data.pest_solution}
+            `;
+        }
+    })
+    .catch(error => console.log("Error:", error));
+}*/
+    </script>
+</body>
+</html>

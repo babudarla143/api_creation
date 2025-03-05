@@ -1,0 +1,9 @@
+Flask
+numpy
+tensorflow==2.18.0
+opencv-python
+pillow
+pyopenssl
+cryptography
+setuptools
+wheel

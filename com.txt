@@ -1,0 +1,15 @@
+curl -X POST http://127.0.0.1:5000/api_create \
+     -H "Content-Type: application/json" \
+     -d '{"name": "test_user"}'
+
+
+curl -X POST http://127.0.0.1:5000/predict \
+     -H "x-api-key: your_generated_api_key" \
+     -F "image=@path_to_image.jpg" \
+     -F "infestation_name=Armyworms (Spodoptera mauritia)"
+
+
+Invoke-RestMethod -Uri "http://127.0.0.1:5000/api_create" `
+  -Method Post `
+  -Headers @{"Content-Type"="application/json"} `
+  -Body '{"name": "test_user"}'
